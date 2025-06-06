@@ -78,6 +78,7 @@
         <form action="{{ url('/order/place') }}" method="POST">
             @csrf
             <input type="submit" class="btn btn-primary" value="Place Order">
+            
         </form>
 
         <!-- Grand Total Display -->

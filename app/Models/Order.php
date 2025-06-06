@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id','total_price'
+        'user_id','total_price' ,'address', 'pin_code', 'status' ,'state', 'city'
     ];
 
     // Relationships

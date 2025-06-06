@@ -1,6 +1,8 @@
 @extends('layouts.default')
-<main id="main" class="main">
 
+
+
+<main id="main" class="main">
     <div class="pagetitle">
         <h1>Order History</h1>
         <nav>
@@ -10,29 +12,34 @@
                 <li class="breadcrumb-item active">Order</li>
             </ol>
         </nav>
-    </div><!-- End Page Title -->
+    </div>
+    @if (session('success'))
+    <div class="alert alert-success mt-3">
+        {{ session('success') }}
+    </div>
+    @endif
+    <div class="d-flex justify-content-end">
+        <a href="{{ route('card') }}" class="btn btn-warning m-2">Home</a>
+    </div>
 
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card position-relative">
-                 
                     <div class="card-body">
                         <h5 class="card-title">Your Cart</h5>
 
-                        <!-- Table with stripped rows -->
-                        <table class="table table-striped">
+                        <table class="table table-bordered border-primary">
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
                                     <th scope="col">Product</th>
-                                    <th scope="col">price</th>
+                                    <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @php
                                 $sn = 1;
                                 $sum = 0;
@@ -63,3 +70,10 @@
                                 @endif
                             </tbody>
                         </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

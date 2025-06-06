@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\OrdersExport;
 use App\Exports\ProductExport;
 use App\Http\Controllers\Authcontroller;
 use App\Http\Controllers\Porfilecontroller;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\PostController;
 
 Route::fallback(function () {
     return view('pages.error');
@@ -18,7 +20,12 @@ Route::fallback(function () {
 Route::get('/example', function () {
     return view('sample');
 });
-    
+
+
+Route::resource('posts', PostController::class);
+Route::get('posts-trashed', [PostController::class, 'trashed'])->name('posts.trashed');
+
+
 
 Route::get('/', [Porfilecontroller::class, 'users'])->name('layout')->middleware(['admin']);
 Route::get('/login', [Authcontroller::class, 'loginpage'])->name('login-view');
@@ -40,6 +47,11 @@ route::middleware(['customer'])->group(function () {
 
     Route::get('/cart', [CartController::class, 'view']);
     Route::post('/order/place', [CartController::class, 'placeOrder'])->name('order');
+
+    Route::get('/order', [CartController::class, 'showForm'])->name('order.form');
+    Route::post('/order', [CartController::class, 'store'])->name('order.store');
+
+
 
 });
 
@@ -63,4 +75,15 @@ route::middleware(['admin'])->group(function () {
     })->name('product.export');
     Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
     Route::get('/admin/order', [CartController::class, 'adminOrderHistory'])->name('admin.orders');
+
+    Route::get('/export-orders', function () {
+        return Excel::download(new OrdersExport, 'orders.xlsx');
+    })->name('orders.export');
+    
+  Route::get('/order/status/{id}', [CartController::class, 'showStatus'])->name('order.status');
+  Route::post('/order/status/update/{id}', [CartController::class, 'updateStatus'])->name('order.updateStatus');
+
+
+
+
 });

@@ -45,3 +45,21 @@
         });
     });
 </script>
+<!-- Js img hover script -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mainImage = document.getElementById('mainProductImage');
+        const subImages = document.querySelectorAll('.sub-image');
+        const originalSrc = mainImage.getAttribute('data-main'); 
+        subImages.forEach(img => {
+            img.addEventListener('mouseover', function () {
+                const newSrc = this.getAttribute('data-image');
+                mainImage.setAttribute('src', newSrc);
+            });
+
+            img.addEventListener('mouseout', function () {
+                mainImage.setAttribute('src', originalSrc);
+            });
+        });
+    });
+</script>
